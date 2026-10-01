@@ -1,7 +1,5 @@
 # PFE_Project
 
-# SAP EWM Queue Monitoring & Alerting
-
 ## 📌 Description
 
 Ce projet consiste en la conception et la réalisation d'une solution automatisée de **monitoring des files d'attente SAP EWM en erreur**.
