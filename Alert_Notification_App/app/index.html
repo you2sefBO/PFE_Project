@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Alert App</title>
+  <script
+    id="sap-ui-bootstrap"
+    src="https://sapui5.hana.ondemand.com/1.146.0/resources/sap-ui-core.js"
+    data-sap-ui-theme="sap_horizon"
+    data-sap-ui-libs="sap.m,sap.tnt,sap.f"
+    data-sap-ui-compat-version="edge"
+    data-sap-ui-language="en"
+    data-sap-ui-async="false"
+    data-sap-ui-frame-options="trusted">
+  </script>
+  <script>
+    sap.ui.getCore().attachInit(function () {
+      "use strict";
+
+      sap.ui.require([
+        "sap/tnt/ToolPage",
+        "sap/tnt/ToolHeader",
+        "sap/tnt/SideNavigation",
+        "sap/tnt/NavigationList",
+        "sap/tnt/NavigationListItem",
+        "sap/m/Title",
+        "sap/m/Button",
+        "sap/m/ToolbarSpacer",
+        "sap/ui/core/HTML"
+      ], function (
+        ToolPage, ToolHeader, SideNavigation,
+        NavigationList, NavigationListItem,
+        Title, Button, ToolbarSpacer, HTML
+      ) {
+
+        var oToolPage;
+
+        // ── iFrame pointant vers $fiori-preview ────────────
+        const oFrame = new HTML("mainFrame", {
+          content: '<iframe id="appFrame" ' +
+            'src="/ewmalertlog/index.html" ' +
+            'style="width:100%;height:100%;border:none;"></iframe>'
+        });
+
+        function navigateTo(sPath) {
+          document.getElementById("appFrame").src = sPath;
+        }
+
+        // ── Navigation latérale ────────────────────────────
+        const oNavList = new NavigationList({
+          itemSelect: function (oEvent) {
+            const sKey = oEvent.getParameter("item").getKey();
+            if (sKey === "EwmAlertLog") {
+              navigateTo("/ewmalertlog/index.html");
+            }
+          },
+          items: [
+            new NavigationListItem({
+              key  : "EwmAlertLog",
+              text : "Alert History",
+              icon : "sap-icon://history"
+            })
+          ]
+        });
+
+        const oSideNav = new SideNavigation({
+          expanded : true,
+          item     : oNavList
+        });
+
+        const oToolHeader = new ToolHeader({
+          content: [
+            new Button({
+              icon : "sap-icon://menu2",
+              type : "Transparent",
+              press: function () {
+                oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
+              }
+            }),
+            new Title({
+              text  : "Alert App",
+              level : "H4"
+            }).addStyleClass("sapUiSmallMarginBegin"),
+            new ToolbarSpacer(),
+            new Button({
+              icon : "sap-icon://person-placeholder",
+              text : "Admin",
+              type : "Transparent"
+            })
+          ]
+        });
+
+        oToolPage = new ToolPage("toolPage", {
+          sideExpanded : true,
+          header       : oToolHeader,
+          sideContent  : oSideNav,
+          mainContents : [oFrame]
+        });
+
+        oToolPage.placeAt("content");
+      });
+    });
+  </script>
+  <style>
+    html, body { height: 100%; margin: 0; overflow: hidden; }
+    .sapTntToolPageMain { height: calc(100vh - 3rem) !important; }
+    .sapTntToolPageMain > * { height: 100%; }
+  </style>
+</head>
+<body class="sapUiBody" id="content"></body>
+</html>

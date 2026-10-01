@@ -1,0 +1,171 @@
+{
+  "_version": "1.83.0",
+  "sap.app": {
+    "id": "ns.ewmalertlog",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.22.0",
+      "toolsId": "2e1fd84b-bdcd-4b49-9545-a06342c2688e"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/api/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "EwmAlertLog-display": {
+          "semanticObject": "EwmAlertLog",
+          "action": "display",
+          "title": "{{EwmAlertLog-display.flpTitle}}",
+          "subTitle": "{{EwmAlertLog-display.flpSubtitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.146.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {},
+        "sap.f": {} 
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "ns.ewmalertlog.i18n.i18n",
+          "supportedLocales": [
+						"",
+						"en"
+					]
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties",
+        "settings": {
+					"supportedLocales": [
+						"",
+						"en"
+					]
+        }  
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClassName": "sap.f.routing.Router"
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "EwmAlertLogList",
+          "target": "EwmAlertLogList"
+        },
+        {
+          "pattern": "EwmAlertLog({key}):?query:",
+          "name": "EwmAlertLogObjectPage",
+          "target": "EwmAlertLogObjectPage"
+        }
+      ],
+      "targets": {
+        "EwmAlertLogList": {
+          "type": "Component",
+          "id": "EwmAlertLogList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/EwmAlertLog",
+              "variantManagement": "None",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "EwmAlertLog": {
+                  "detail": {
+                    "route": "EwmAlertLogObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "condensedTableLayout": true,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "EwmAlertLogObjectPage": {
+          "type": "Component",
+          "id": "EwmAlertLogObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/EwmAlertLog",
+              "layout": "TwoColumnsMidExpanded"
+            }
+          }
+        }
+      }
+    },
+		"flexBundle": false
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.fe": {
+    "app": {
+      "enableLazyLoading": true
+    }
+  }
+}

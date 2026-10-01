@@ -1,0 +1,29 @@
+{
+  "authenticationMethod": "route",
+  "routes": [
+    {
+      "source": "^/config/(.*)$",
+      "target": "/config/$1",
+      "destination": "srv-api",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^/auditlogs/(.*)$",
+      "target": "$1",
+      "localDir": "resources/auditlogs/webapp",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^/configurations/(.*)$",
+      "target": "$1",
+      "localDir": "resources/configurations/webapp",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^/$",
+      "target": "index.html",
+      "localDir": "resources",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

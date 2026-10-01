@@ -1,0 +1,11 @@
+# Ignore the generated source code and build artifacts
+/src/gen/
+/gen/
+
+# Ignore local deployment logs and logs
+*.log
+.env
+credentials*
+
+# Ignore dependency directories if present in the db module
+node_modules/

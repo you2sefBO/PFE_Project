@@ -1,0 +1,2 @@
+sap.ui.define(["sap/fe/test/JourneyRunner","ns/auditlogs/test/integration/pages/AuditLogsList","ns/auditlogs/test/integration/pages/AuditLogsObjectPage"],function(t,e,s){"use strict";var i=new t({launchUrl:sap.ui.require.toUrl("ns/auditlogs")+"/test/flp.html#app-preview",pages:{onTheAuditLogsList:e,onTheAuditLogsObjectPage:s},async:true});return i});
+//# sourceMappingURL=JourneyRunner.js.map

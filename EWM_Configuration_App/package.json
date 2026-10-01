@@ -1,0 +1,58 @@
+{
+  "name": "EWM-Configuration_App",
+  "version": "1.0.0",
+  "description": "SAP CAP - EWM Configuration App",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@cap-js/hana": "^2.7.0",
+    "@sap_oss/alert-notification-client": "^1.14.0",
+    "@sap/cds": "^9",
+    "@sap/xssec": "^4.12.2"
+  },
+  "devDependencies": {
+    "@sap/cds-dk": "^9.9.2",
+    "cds-plugin-ui5": "^0.13.0",
+    "mbt": "^1.2.29",
+    "rimraf": "^5.0.5"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "dev": "cds watch --profile hybrid",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "watch-configurations": "cds watch --open ns.configurations/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "undeploy": "cf undeploy ewm-monitoring --delete-services --delete-service-keys --delete-service-brokers",
+    "watch-auditlogs": "cds watch --open ns.auditlogs/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "cds": {
+    "drafts": {
+      "cancellationTimeout": 0
+    },
+    "i18n": {
+      "default_language": "en"
+    },
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "model": [
+          "db",
+          "srv"
+        ]
+      },
+      "auth": {
+        "kind": "xsuaa"
+      },
+      "alert-notification": {
+        "kind": "alert-notification"
+      }
+    }
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "sapux": [
+    "app/configurations",
+    "app/auditlogs"
+  ]
+}

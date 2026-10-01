@@ -1,0 +1,70 @@
+_schema-version: 3.3.0
+ID: Alert_Notification_App
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install --legacy-peer-deps
+        - npx cds build --production
+modules:
+  - name: Alert_Notification_App-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      memory: 256M
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: Alert_Notification_App-db
+      - name: EWM_Configuration_App-alert-notification
+      - name: EWM_Configuration_App-auth 
+# ---------------- DATABASE ----------------
+  - name: Alert_Notification_App-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      memory: 256M
+    requires:
+      - name: Alert_Notification_App-db
+# ---------------- APPRROUTER ----------------
+  - name: Alert_Notification_App-approuter
+    type: approuter.nodejs
+    path: approuter
+    parameters:
+      memory: 256M
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: EWM_Configuration_App-auth
+resources:
+  # ---------------- HANA DB ----------------
+  - name: Alert_Notification_App-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared  
+  # ---------------- ALERT NOTIFICATION ----------------
+  - name: EWM_Configuration_App-alert-notification
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service: alert-notification
+      service-name: alert_notification_ewm
+      service-plan: standard
+  # ---------------- XSUAA ----------------    
+  - name: EWM_Configuration_App-auth
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service: xsuaa
+      service-name: EWM_Configuration_App-auth

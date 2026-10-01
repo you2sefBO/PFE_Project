@@ -1,0 +1,16 @@
+{ 
+  "requires": { 
+    "db": { 
+      "kind": "hana" 
+    }, 
+    "auth": { 
+      "kind": "xsuaa" 
+    },
+    "alert-notification": {
+      "kind": "alert-notification"
+    } 
+  }, 
+  "hana": { 
+    "deploy-format": "hdbtable" 
+  } 
+}

@@ -1,0 +1,122 @@
+{
+  "_version": "1.83.0",
+  "sap.app": {
+    "id": "ns.configurations",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": { 
+      "version": "0.0.1" 
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "dataSources": {
+      "mainService": {
+        "uri": "/config/",
+        "type": "OData",
+        "settings": { "odataVersion": "4.0" }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "handleValidation": false,
+    "dependencies": {
+      "minUI5Version": "1.146.0",
+      "libs": { 
+        "sap.m": {}, 
+        "sap.ui.core": {}, 
+        "sap.fe.templates": {}, 
+        "sap.f": {} 
+      }
+    },
+    "contentDensities": { 
+      "compact": true, 
+      "cozy": true 
+    },
+    "models": {
+      "i18n": { 
+        "type": "sap.ui.model.resource.ResourceModel", 
+        "settings": { 
+          "bundleName": "ns.configurations.i18n.i18n" 
+        } 
+      },
+      "": { 
+        "dataSource": "mainService", 
+        "preload": true, 
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true,
+          "synchronizationMode": "None"
+        } 
+      }
+    },
+    "routing": {
+      "routes": [
+        { "pattern": ":?query:", "name": "ConfigurationsList", "target": "ConfigurationsList" },
+        { "pattern": "Configurations({key}):?query:", "name": "ConfigurationsObjectPage", "target": "ConfigurationsObjectPage" }
+      ],
+      "targets": {
+        "ConfigurationsList": {
+          "type": "Component",
+          "id": "ConfigurationsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Configurations",
+              "variantManagement": "None",
+              "initialLoad": "Enabled",
+              "navigation": {
+                "Configurations": { 
+                  "detail": { 
+                    "route": "ConfigurationsObjectPage" 
+                  } 
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "creationMode": { "name": "NewPage" },
+                    "condensedTableLayout": true,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ConfigurationsObjectPage": {
+          "type": "Component",
+          "id": "ConfigurationsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/Configurations",
+              "editableHeaderContent": false
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.fe": {
+    "app": {
+      "enableLazyLoading": true,
+      "draftEnabled": true
+    }
+  }
+}

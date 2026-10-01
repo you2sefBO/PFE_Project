@@ -1,0 +1,2 @@
+sap.ui.define(["sap/fe/test/JourneyRunner","ns/configurations/test/integration/pages/ConfigurationsList","ns/configurations/test/integration/pages/ConfigurationsObjectPage"],function(n,t,e){"use strict";var i=new n({launchUrl:sap.ui.require.toUrl("ns/configurations")+"/test/flp.html#app-preview",pages:{onTheConfigurationsList:t,onTheConfigurationsObjectPage:e},async:true});return i});
+//# sourceMappingURL=JourneyRunner.js.map

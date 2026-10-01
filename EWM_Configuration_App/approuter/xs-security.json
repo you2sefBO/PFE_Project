@@ -1,0 +1,70 @@
+{
+  "xsappname": "EWM_Configuration_App",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.ADMIN",
+      "description": "Administrator - total access to all features"
+    },
+    {
+      "name": "$XSAPPNAME.OPERATOR",
+      "description": "Operator - data management and configuration"
+    },
+    {
+      "name": "$XSAPPNAME.VIEWER",
+      "description": "Viewer - read-only access to data and configuration"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "ADMIN",
+      "description": "role template for Administrators",
+      "scope-references": [
+        "$XSAPPNAME.ADMIN"
+      ]
+    },
+    {
+      "name": "OPERATOR",
+      "description": "role template for Operators",
+      "scope-references": [
+        "$XSAPPNAME.OPERATOR"
+      ]
+    },
+    {
+      "name": "VIEWER",
+      "description": "role template for viewers",
+      "scope-references": [
+        "$XSAPPNAME.VIEWER"
+      ]
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "EWM_Configuration_Admin",
+      "description": "total access - Administrator of EWM Configuration",
+      "role-template-references": [
+        "$XSAPPNAME.ADMIN"
+      ]
+    },
+    {
+      "name": "EWM_Configuration_Operator",
+      "description": "data management and configuration - Operator of EWM Configuration",
+      "role-template-references": [
+        "$XSAPPNAME.OPERATOR"
+      ]
+    },
+    {
+      "name": "EWM_Configuration_Viewer",
+      "description": "read-only access - Viewer of EWM Configuration",
+      "role-template-references": [
+        "$XSAPPNAME.VIEWER"
+      ]
+    }
+  ],
+  "oauth2-configuration": {
+    "redirect-uris": [
+      "https://*.cfapps.eu10-004.hana.ondemand.com/**"
+    ]
+  }
+}
